@@ -1,11 +1,11 @@
 package domain
 
-import java.util.Date
+import java.time.LocalDateTime
 
 data class Transaction(
     val accountNumber: String,
     val amount: Int,
-    val date: Date
+    val date: LocalDateTime
 ){
 
     // To add logic, if needed
