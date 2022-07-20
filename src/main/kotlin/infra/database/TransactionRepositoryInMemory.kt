@@ -31,9 +31,9 @@ class TransactionRepositoryInMemory : TransactionRepository {
     }
 
     fun retrieveAccountBalance(accountNumber: String): Int{
-        var balance = 0
         if (!database[accountNumber].isNullOrEmpty()){
             return database[accountNumber]!!.last().balance
         }
+        return 0
     }
 }

@@ -2,6 +2,7 @@ package infra.view
 
 import application.AccountService
 import application.AccountServiceImpl
+import domain.Transaction
 import domain.TransactionRepository
 import infra.database.TransactionRepositoryInMemory
 
@@ -13,7 +14,7 @@ fun main(args: Array<String>) {
     val storedData = TransactionRepositoryInMemory()
     val accountService = AccountServiceImpl(storedData)
 
-    val optionList:List<String> = listOf("1.- BALANCE INQUIRY", "2.- INGRESS", "3.- WITHDRAWAL", "4.- EXTRACT INQUIRY", "5.- EXIT")
+    val optionList:List<String> = listOf("1.- BALANCE INQUIRY", "2.- DEPOSIT", "3.- WITHDRAWAL", "4.- EXTRACT INQUIRY", "5.- EXIT")
 
     fun mainMenu(): String {
         println("Welcome to Kata - Bank")
@@ -40,6 +41,20 @@ fun main(args: Array<String>) {
         return readLine().toString()
     }
 
+    fun printStatement(list:List<Transaction>){
+        if(list.isNullOrEmpty())
+        {
+            println("ERROR: the account does not exist")
+        }
+        else {
+            println("account number = ${list[0].accountNumber}")
+            for (item in list) {
+                println(item.date.toString() + "      " + item.amount)
+            }
+            println("Account balance = ${list.last().balance}")
+        }
+    }
+
     fun messageContinue(){
         println("Press enter to continue")
         readLine().toString()
@@ -54,10 +69,10 @@ fun main(args: Array<String>) {
             clear()
 
             when(option){
-                "1" -> println(optionList[0])
-                "2" -> println(optionList[1])
-                "3" -> println(optionList[2])
-                "4" -> println(optionList[3])
+                "1" -> println("Your account balace is ${accountService.retrieveAccountBalance("Dani")}")
+                "2" -> accountService.deposit("Dani", 150)
+                "3" -> accountService.withdraw("Albert", 60)
+                "4" -> printStatement(accountService.retrieveStatement("Dani"))
             }
 
         }

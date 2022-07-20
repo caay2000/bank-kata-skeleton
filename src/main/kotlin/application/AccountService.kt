@@ -8,6 +8,5 @@ interface AccountService {
     fun withdraw(accountNumber: String, amount: Int): Unit
     fun retrieveStatement(accountNumber: String) : List<Transaction>
 
-    fun balance(accountNumber: String): Unit
 
 }
