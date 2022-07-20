@@ -1,28 +1,24 @@
 package application
 
-import domain.Transaction
-import domain.TransactionRepository
-import java.time.LocalDateTime
+import domain.Account
+import domain.AccountRepository
 import kotlin.math.abs
 
-class AccountServiceImpl(private val transactionRepository: TransactionRepository) : AccountService {
+class AccountServiceImpl(private val accountRepository: AccountRepository) : AccountService {
 
     override fun deposit(accountNumber: String, amount: Int) {
-        // It should create a transaction and call the repository to store it
-
-        val transaction = Transaction(accountNumber, abs(amount), LocalDateTime.now())
-        transactionRepository.saveTransaction(transaction)
+        val account = accountRepository.findById(accountNumber)
+        val updatedAccount = account.operate(abs(amount))
+        accountRepository.save(updatedAccount)
     }
 
     override fun withdraw(accountNumber: String, amount: Int) {
-        // It should create a transaction and call the repository to store it
-
-        val transaction = Transaction(accountNumber, -abs(amount), LocalDateTime.now())
-        transactionRepository.saveTransaction(transaction)
+        val account = accountRepository.findById(accountNumber)
+        val updatedAccount = account.operate(-abs(amount))
+        accountRepository.save(updatedAccount)
     }
 
-    override fun retrieveStatement(accountNumber: String): List<Transaction> {
-        // It should retrieve all the transactions of the accountNumber and return them
-        return transactionRepository.retrieveAllTransactions(accountNumber)
+    override fun retrieveAccount(accountNumber: String): Account {
+        return accountRepository.findById(accountNumber)
     }
 }

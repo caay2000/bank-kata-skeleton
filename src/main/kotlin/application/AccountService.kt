@@ -1,11 +1,10 @@
 package application
 
-import domain.Transaction
+import domain.Account
 
 interface AccountService {
 
-    fun deposit(accountNumber: String, amount: Int): Unit
-    fun withdraw(accountNumber: String, amount: Int): Unit
-    fun retrieveStatement(accountNumber: String) : List<Transaction>
-
+    fun deposit(accountNumber: String, amount: Int)
+    fun withdraw(accountNumber: String, amount: Int)
+    fun retrieveAccount(accountNumber: String): Account
 }
