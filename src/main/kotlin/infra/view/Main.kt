@@ -1,18 +1,18 @@
 package infra.view
 
-import application.AccountService
 import application.AccountServiceImpl
+import domain.Account
 import domain.Transaction
-import domain.TransactionRepository
-import infra.database.TransactionRepositoryInMemory
+import infra.database.AccountRepositoryInMemory
+//import infra.database.TransactionRepositoryInMemory
 
 fun main(args: Array<String>) {
 
     // Main class
     // It should create an accountService, do all the operations needed, and print the statement on console
     // Note that the accountService needs a transactionRepository implementation, so it should also be created here!
-    val storedData = TransactionRepositoryInMemory()
-    val accountService = AccountServiceImpl(storedData)
+    val accountRepository = AccountRepositoryInMemory()
+    val accountService = AccountServiceImpl(accountRepository)
 
     val optionList:List<String> = listOf("1.- BALANCE INQUIRY", "2.- DEPOSIT", "3.- WITHDRAWAL", "4.- EXTRACT INQUIRY", "5.- EXIT")
 
@@ -41,17 +41,17 @@ fun main(args: Array<String>) {
         return readLine().toString()
     }
 
-    fun printStatement(list:List<Transaction>){
-        if(list.isNullOrEmpty())
+    fun printStatement(account:Account){
+        if(account.accountNumber == "")
         {
             println("ERROR: the account does not exist")
         }
         else {
-            println("account number = ${list[0].accountNumber}")
-            for (item in list) {
+            println("account number = ${account.accountNumber}")
+            for (item in account.transactions) {
                 println(item.date.toString() + "      " + item.amount)
             }
-            println("Account balance = ${list.last().balance}")
+            println("Account balance = ${account.balance}")
         }
     }
 
@@ -69,10 +69,10 @@ fun main(args: Array<String>) {
             clear()
 
             when(option){
-                "1" -> println("Your account balace is ${accountService.retrieveAccountBalance("Dani")}")
+                "1" -> println("Your account balance is ${accountService.retrieveAccountBalance("Dani")}")
                 "2" -> accountService.deposit("Dani", 150)
-                "3" -> accountService.withdraw("Albert", 60)
-                "4" -> printStatement(accountService.retrieveStatement("Dani"))
+                "3" -> accountService.withdraw("Dani", 60)
+                "4" -> printStatement(accountService.retrieveAccount("Dani"))
             }
 
         }
@@ -81,6 +81,8 @@ fun main(args: Array<String>) {
         }
         println("Please, press enter to continue")
         readLine()
+
+
 
 
     }
