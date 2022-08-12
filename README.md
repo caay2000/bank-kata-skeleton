@@ -31,6 +31,11 @@ Implement the diagram in the easiest way possible, just complete the interfaces 
 
 We realised that our Transactions are not enough to store some information like the account current balance. Just use the new Account object and change whatever you need in order to make it work. And remember, keep it simple!
 
+### Adding some testing
+[Exercise 3](https://github.com/caay2000/bank-kata-skeleton/tree/exercise-3)
+
+We want to add some testing to our bank kata. Let's start creating some simple tests for our AccountService!!!
+
 ### Disclaimer
 
 This is just for learning purposes, there are some incorrect approaches that are explicitly there for the aim of
