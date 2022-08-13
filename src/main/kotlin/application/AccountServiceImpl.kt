@@ -3,12 +3,10 @@ package application
 import domain.Account
 import java.time.LocalDate
 import domain.Transaction
-//import domain.TransactionRepository
-import infra.database.AccountRepositoryInMemory
-//import infra.database.TransactionRepositoryInMemory
+import domain.AccountRepository
 import kotlin.math.abs
 
-class AccountServiceImpl(private val accountRepository: AccountRepositoryInMemory) : AccountService {
+class AccountServiceImpl(private val accountRepository: AccountRepository) : AccountService {
 
     override fun deposit(accountNumber: String, amount: Int) {
         processTransaction(accountNumber, abs(amount))

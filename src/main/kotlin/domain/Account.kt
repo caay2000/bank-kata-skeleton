@@ -7,4 +7,5 @@ data class Account(
     // To add logic, if needed
     var balance: Int = 0
 
+
 }
